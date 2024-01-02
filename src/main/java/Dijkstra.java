@@ -1,4 +1,3 @@
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.FileStatus;
@@ -17,18 +16,18 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class Dijkstra extends Configured implements Tool {
     public static final long INF = 10009;
     public static String OUT = "/output/dijkstra";
     public static String IN = "/input/dijkstra";
     public static long STEP = 0;
-    HashMap<String, Long> _map;
-    HashMap<String, Long> imap;
+    HashMap<String, Long> beforeMap;
+    HashMap<String, Long> currentMap;
 
     public static class DijkstraMapper extends Mapper<LongWritable, Text, Text, Text> {
         public void map(LongWritable key, Text value, Context context)
@@ -42,11 +41,11 @@ public class Dijkstra extends Configured implements Tool {
              *       độ dài đường đi từ đỉnh n đến các đỉnh m1;m2;...; là d1;d2;...;
              */
 
-            1 1 0 2:1;3:1;
-            2 1 10000 1:1;4:1;5:1;
-            3 1 10000 1:1;
-            4 1 10000 2:1;5:1;
-            5 1 10000 2:1;4:1;
+//            1 1 0 2:1;3:1;
+//            2 1 10000 1:1;4:1;5:1;
+//            3 1 10000 1:1;
+//            4 1 10000 2:1;5:1;
+//            5 1 10000 2:1;4:1;
 
             //Mỗi dòng input được lưu vào value
             //có dạng: <n p D m1:d1;m2:d2;...;>
@@ -62,6 +61,7 @@ public class Dijkstra extends Configured implements Tool {
             Text output_key;
             Text output_value = new Text();
 
+            //smallest = -1
             long smallest = Long.parseLong(context.getConfiguration().get("smallest_value"));
             long INF_value = Long.parseLong(context.getConfiguration().get("INF_value"));
 
@@ -71,12 +71,16 @@ public class Dijkstra extends Configured implements Tool {
             //  3. N là trạng thái lưu lại các đỉnh kề của nút n => phục vụ cho việc phục hồi lại nút
             //  4. V là trạng thái lưu lại độ dài đường đi từ nút xuất phát đến nút hiện tại thông qua nút n
 
-            //Nếu D > vô cùng => không truyền dữ liệu sang các đỉnh khác
+            //Nếu D > vô cùng (1009) => không truyền dữ liệu sang các đỉnh khác
             //                   chỉ gửi tính hiệu sang reducer để phục hồi lại trạng thái đỉnh
             if (D >= INF_value) {
+                //todo check why init Text here
                 output_key = new Text();
                 output_key.set(n);
-                output_value.set("I " + p + " " + D + " " + sp[3]);
+                String value_output = "I " + p + " " + D + " " + sp[3];
+                System.out.println("===========================Mapper INF========================");
+                System.out.println("Key output: " + n + "Value output: " + value_output);
+                output_value.set(value_output);
                 context.write(output_key, output_value);
                 output_value.clear();
             } else if (D > smallest) {
@@ -85,12 +89,16 @@ public class Dijkstra extends Configured implements Tool {
                     for (String md : pointsTo) {
                         String[] data = md.split(":");
                         output_key = new Text();
-                        output_key.set(data[0]);
+                        String key_output = data[0];
+                        output_key.set(key_output);
                         newDistance = D + Long.parseLong(data[1]);
                         //Giá trị xuất ra ứng với mỗi đỉnh m là
                         //   - dùng để tìm ĐDĐĐNN từ đỉnh xuất phát đến đỉnh m ở hàm Reducer
                         //   key:m    -     value:"V n newDistance"
-                        output_value.set("V " + n + " " + newDistance);
+                        String value_output = "V " + n + " " + newDistance;
+                        System.out.println("===========================Mapper SMALLEST Not NuLL========================");
+                        System.out.println("Key output: " + key_output + "Value output: " + value_output);
+                        output_value.set(value_output);
                         context.write(output_key, output_value);
                         output_value.clear();
                     }
@@ -100,23 +108,37 @@ public class Dijkstra extends Configured implements Tool {
                 //Mỗi đỉnh n cần xuất ra giá trị
                 //   - dùng để tìm ĐDĐĐNN từ đỉnh xuất phát đến đỉnh n ở hàm Reducer
                 //   key:n    -     value:"V p D"
-                output_value.set("V " + p + " " + D);
+                String value_output = "V " + p + " " + D;
+                output_value.set(value_output);
                 context.write(output_key, output_value);
+
+                System.out.println("===========================Mapper SMALLEST IS NuLL========================");
+                System.out.println("Key output: " + n + "Value output: " + value_output);
+
+                //todo refactor here
                 output_value.clear();
 
                 //Mỗi đỉnh n cần xuất ra giá trị
                 //   - dùng để lưu trạng thái của đỉnh n ở hàm Reducer <n p D m1:d1;m2:d2;...;>
                 //   key:n    -     value:"N m1:d1;m2:d2;...;"
-                output_value.set("N " + sp[3]);
+                String adjacentOfn = "N " + sp[3];
+                output_value.set(adjacentOfn);
                 context.write(output_key, output_value);
+
+                System.out.println("===========================Mapper Adjacent of n ========================");
+                System.out.println("Key output: " + n + "Value output: " + adjacentOfn);
                 output_value.clear();
             } else {
                 //Nếu D <= smallest => không cần phát dữ liệu sang các đỉnh khác từ đỉnh này
                 //                     chỉ gửi tính hiệu sang reducer để phục hồi lại trạng thái đỉnh
                 output_key = new Text();
                 output_key.set(n);
-                output_value.set("F " + p + " " + D + " " + sp[3]);
+                String value_output = "F " + p + " " + D + " " + sp[3];
+                output_value.set(value_output);
                 context.write(output_key, output_value);
+                System.out.println("===========================Mapper: D <= smallest========================");
+                System.out.println("Key output: " + n + "Value output: " + value_output);
+
                 output_value.clear();
             }
         }
@@ -136,12 +158,16 @@ public class Dijkstra extends Configured implements Tool {
             String pointsTo = "";
             Text output_value = new Text();
             long shortest = INF;
+//            (10009)
             long D;
             String p = key.toString();
             String status = "";
 
             for (Text val : values) {
-                String[] sp = val.toString().split(" ");
+                String valString = val.toString();
+                System.out.println("=======================Reducer============================");
+                System.out.println("=== INPUT VAlue:" + valString);
+                String[] sp = valString.split(" ");
                 if (sp[0].equalsIgnoreCase("V") ||
                         sp[0].equalsIgnoreCase("I")) {
                     //V p D                - p la dinh lien truoc cua dinh n tren duong di
@@ -168,8 +194,13 @@ public class Dijkstra extends Configured implements Tool {
                 }
             }
             //Giá trị xuất ra có dạng <n p D pointsTo>
-            output_value.set(p + " " + shortest + " " + pointsTo + " " + status);
+            String value_input = p + " " + shortest + " " + pointsTo + " " + status;
+            output_value.set(value_input);
             context.write(key, output_value);
+
+            System.out.println("===========================REDUCER: PROCESSED output ========================");
+            System.out.println("Key output: " + key.toString() + "Value output: " + value_input);
+
             output_value.clear();
         }
     }
@@ -186,6 +217,7 @@ public class Dijkstra extends Configured implements Tool {
 
     public int run(String[] args) throws Exception {
         //Cấu hình giá trị key - value ngăn cách bởi khoảng trắng
+        System.out.println("================RUN===================================");
         getConf().set("mapred.textoutputformat.separator", " ");
 
         //Lấy giá trị của file input và output
@@ -214,7 +246,7 @@ public class Dijkstra extends Configured implements Tool {
         //Lưu lại các cặp giá trị n D ở bước lặp trước đó vào _map
         //Lưu lại các cặp giá trị n D ở bước lặp hiện tại vào imap
         //Vòng lặp sẽ dừng lại khi _map giống như imap => không thể cập nhật được thêm
-        _map = new HashMap<String, Long>();
+        beforeMap = new HashMap<String, Long>();
 
         getConf().set("INF_value", Long.toString(INF));
         long smallest = INF;
@@ -252,7 +284,7 @@ public class Dijkstra extends Configured implements Tool {
             //Thiết đặt để không chạy lại giải thuật - giả sử đã hoàn thành
             isdone = true;
             Path ofile = new Path(inputfile);
-            imap = new HashMap<String, Long>();
+            currentMap = new HashMap<String, Long>();
             BufferedReader br = new BufferedReader(new InputStreamReader(dfs.open(ofile)));
             String line = br.readLine(); //Mỗi dòng có dạng 1 1 0 2:1;3:1;
             String n;
@@ -269,7 +301,7 @@ public class Dijkstra extends Configured implements Tool {
                 String[] sp = line.split(" ");
                 n = sp[0];
                 D = Long.parseLong(sp[2]);
-                imap.put(n, D);
+                currentMap.put(n, D);
 
                 if (D <= smallest_value) {
                     fix_count++;
@@ -277,24 +309,24 @@ public class Dijkstra extends Configured implements Tool {
                 } else if (D < smallest) {
                     smallest = D;
                 }
-//                System.out.println("* " + line);
+                System.out.println("*** RUN *** Cần ghi nhận lại cặp n D - đỉnh n và D: độ dài đường đi từ đỉnh xuất phát đến đỉnh n === " + line);
                 line = br.readLine();
             }
 
             smallest_value = smallest;
-/*
+
             System.out.println("****************************************");
             System.out.println("* outputfile    : " + inputfile);
             System.out.println("* smallest value: " + smallest_value);
             System.out.println("* fixed         : " + fix_count + " - " + fixed);
             System.out.println("****************************************");
-*/
+
             //Nếu đã lặp đến lần 2 => so sánh giữa 2 lần (so sánh _map và imap)
-            if (!_map.isEmpty()) {
+            if (!beforeMap.isEmpty()) {
                 //Kiểm tra giá trị giữa lần lặp trước và lần này có giống nhau không
-                for (String dinh_n : imap.keySet()) {
-                    D = imap.get(dinh_n);
-                    if (_map.get(dinh_n) != D) {
+                for (String dinh_n : currentMap.keySet()) {
+                    D = currentMap.get(dinh_n);
+                    if (beforeMap.get(dinh_n) != D) {
                         //Giá trị D lần lặp trước và lần này khác nhau => còn cập nhật được
                         isdone = false;
                         break;
@@ -304,8 +336,10 @@ public class Dijkstra extends Configured implements Tool {
                 isdone = false;
             }
             if (!isdone) { //Nếu cần chạy lại giải thuật thì chép imap thành _map
-                _map.putAll(imap);
+                beforeMap.putAll(currentMap);
             }
+            System.out.println("============= BEFORE MAP ================== " + stt + " " + maptoString(beforeMap));
+            System.out.println("============= CURRENT MAP ================== " + stt + " " + maptoString(currentMap));
         }
         System.out.println("****************************************");
         System.out.println("* outputfile    : " + inputfile);
@@ -322,6 +356,12 @@ public class Dijkstra extends Configured implements Tool {
         System.out.println("****************************************");
 
         return success ? 0 : 1;
+    }
+
+    private String maptoString(HashMap<String, Long> beforeMap) {
+        return beforeMap.keySet().stream()
+                .map(key -> key + "=" + beforeMap.get(key))
+                .collect(Collectors.joining(", ", "{", "}"));
     }
 
     public static void main(String[] args) throws Exception {

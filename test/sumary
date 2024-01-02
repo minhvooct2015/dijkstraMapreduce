@@ -1,0 +1,39 @@
+//            1 1 0 2:1;3:1;
+//            2 1 10000 1:1;4:1;5:1;
+//            3 1 10000 1:1;
+//            4 1 10000 2:1;5:1;
+//            5 1 10000 2:1;4:1;
+1 1 0 2:1;3:1;
+2 1 1 1:1;4:1;5:1;
+3 1 1 1:1;
+4 2 2 2:1;5:1;
+5 2 2 2:1;4:1;
+smallest_value = -1
+
+//Giá trị phát ra có 4 dạng
+//  1. I là đỉnh có nhãn là vô cùng
+//  2. F là đỉnh đã FIXED
+//  3. N là trạng thái lưu lại các đỉnh kề của nút n => phục vụ cho việc phục hồi lại nút
+//  4. V là trạng thái lưu lại độ dài đường đi từ nút xuất phát đến nút hiện tại thông qua nút n
+
+/**Key    là chỉ số dòng đang đọc
+ *Value  có dạng <n p D m1:d1;m2:d2;...;>
+ *       n là đỉnh đang được xét
+ *       p là đỉnh lien truoc dinh n tren duong di ngan nhat
+ *       D là khoảng cách ngắn nhất đi từ đỉnh xuất phát đến đỉnh n
+ *       m1;m2;...; là danh sách các đỉnh kề của n,
+ *       độ dài đường đi từ đỉnh n đến các đỉnh m1;m2;...; là d1;d2;...;
+ */
+
+  /**Key:     đỉnh n
+             *Value:   có 3 dạng:
+             *         V p D                - p la dinh lien truoc cua dinh n tren duong di
+             *                              - D là độ dài đường đi từ đỉnh xuất phát đến đỉnh n
+             *         N m1:d1;m2:d2;...;   - m1:d1;m2:d2;...; dùng để khôi phục lại trạng thái của đỉnh n
+             *         I p D m1:d1;m2:d2;...; DDDD tu dinh xuat phat den đỉnh n là vô cùng => chỉ phục hồi lại trạng thái của đỉnh này
+             *         F p D m1:d1;m2:d2;...; DDDD tu dinh xuat phat den đỉnh n da ngan nhat => khong the cap nhat nua
+             */
+
+//Lưu lại các cặp giá trị n D ở bước lặp trước đó vào _map
+//Lưu lại các cặp giá trị n D ở bước lặp hiện tại vào imap
+//Vòng lặp sẽ dừng lại khi _map giống như imap => không thể cập nhật được thêm
