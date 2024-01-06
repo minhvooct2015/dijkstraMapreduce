@@ -1,0 +1,309 @@
+rickdal@Air-cua-Vo DijkstraMapreduce % /usr/local/Cellar/hadoop/3.3.2/bin/hadoop jar target/DijkstraMapreduce-1.0-SNAPSHOT.jar Dijkstra /user/chattod/data output
+================RUN===================================
+---------------------------------------------
+- INPUT FILE: /user/chattod/data
+---------------------------------------------
+2024-01-04 21:18:30,103 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+--------------------------------------
+- All old output file are deleted!!! -
+--------------------------------------
+2024-01-04 21:18:31,432 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /127.0.0.1:8032
+2024-01-04 21:18:32,235 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/rickdal/.staging/job_1704377793637_0001
+2024-01-04 21:18:32,624 INFO input.FileInputFormat: Total input files to process : 1
+2024-01-04 21:18:32,729 INFO mapreduce.JobSubmitter: number of splits:1
+2024-01-04 21:18:32,777 INFO Configuration.deprecation: mapred.textoutputformat.separator is deprecated. Instead, use mapreduce.output.textoutputformat.separator
+2024-01-04 21:18:33,413 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1704377793637_0001
+2024-01-04 21:18:33,414 INFO mapreduce.JobSubmitter:
+2024-01-04 21:18:33,720 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.Executing with tokens: []
+                                                                                         2024-01-04 21:18:33,719 INFO conf.Configuration: resource-types.xml not found
+2024-01-04 21:18:34,389 INFO impl.YarnClientImpl: Submitted application application_1704377793637_0001
+2024-01-04 21:18:34,487 INFO mapreduce.Job: The url to track the job: http://air-cua-vo.lan:8088/proxy/application_1704377793637_0001/
+2024-01-04 21:18:34,488 INFO mapreduce.Job: Running job: job_1704377793637_0001
+2024-01-04 21:18:56,012 INFO mapreduce.Job: Job job_1704377793637_0001 running in uber mode : false
+2024-01-04 21:18:56,014 INFO mapreduce.Job:  map 0% reduce 0%
+2024-01-04 21:19:08,286 INFO mapreduce.Job:  map 100% reduce 0%
+2024-01-04 21:19:14,344 INFO mapreduce.Job:  map 100% reduce 100%
+2024-01-04 21:19:15,373 INFO mapreduce.Job: Job job_1704377793637_0001 completed successfully
+2024-01-04 21:19:15,527 INFO mapreduce.Job: Counters: 50
+        File System Counters
+                FILE: Number of bytes read=279
+                FILE: Number of bytes written=552955
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=219
+                HDFS: Number of bytes written=88
+                HDFS: Number of read operations=8
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=2
+                HDFS: Number of bytes read erasure-coded=0
+        Job Counters
+                Launched map tasks=1
+                Launched reduce tasks=1
+                Data-local map tasks=1
+                Total time spent by all maps in occupied slots (ms)=9217
+                Total time spent by all reduces in occupied slots (ms)=4179
+                Total time spent by all map tasks (ms)=9217
+                Total time spent by all reduce tasks (ms)=4179
+                Total vcore-milliseconds taken by all map tasks=9217
+                Total vcore-milliseconds taken by all reduce tasks=4179
+                Total megabyte-milliseconds taken by all map tasks=9438208
+                Total megabyte-milliseconds taken by all reduce tasks=4279296
+        Map-Reduce Framework
+                Map input records=5
+                Map output records=20
+                Map output bytes=233
+                Map output materialized bytes=279
+                Input split bytes=115
+                Combine input records=0
+                Combine output records=0
+                Reduce input groups=5
+                Reduce shuffle bytes=279
+                Reduce input records=20
+                Reduce output records=5
+                Spilled Records=40
+                Shuffled Maps =1
+                Failed Shuffles=0
+                Merged Map outputs=1
+                GC time elapsed (ms)=204
+                CPU time spent (ms)=0
+                Physical memory (bytes) snapshot=0
+                Virtual memory (bytes) snapshot=0
+                Total committed heap usage (bytes)=404750336
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters
+                Bytes Read=104
+        File Output Format Counters
+                Bytes Written=88
+
+***************** Ket thuc lan lap 1 *****************
+
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 1 1 0 2:1;3:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 2 1 1 1:1;4:1;5:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 3 1 1 1:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 4 1 10000 2:1;5:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 5 1 10000 2:1;4:1;
+****************************************
+* outputfile    : /output/dijkstra1/part-r-00000
+* smallest value: 0
+* fixed         : 0 -
+****************************************
+============= BEFORE MAP ================== 1 {1=0, 2=1, 3=1, 4=10000, 5=10000}
+============= CURRENT MAP ================== 1 {1=0, 2=1, 3=1, 4=10000, 5=10000}
+2024-01-04 21:19:15,656 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /127.0.0.1:8032
+2024-01-04 21:19:15,713 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/rickdal/.staging/job_1704377793637_0002
+2024-01-04 21:19:15,763 INFO input.FileInputFormat: Total input files to process : 1
+2024-01-04 21:19:15,844 INFO mapreduce.JobSubmitter: number of splits:1
+2024-01-04 21:19:15,993 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1704377793637_0002
+2024-01-04 21:19:15,994 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2024-01-04 21:19:16,043 INFO impl.YarnClientImpl: Submitted application application_1704377793637_0002
+2024-01-04 21:19:16,054 INFO mapreduce.Job: The url to track the job: http://air-cua-vo.lan:8088/proxy/application_1704377793637_0002/
+2024-01-04 21:19:16,055 INFO mapreduce.Job: Running job: job_1704377793637_0002
+2024-01-04 21:19:37,437 INFO mapreduce.Job: Job job_1704377793637_0002 running in uber mode : false
+2024-01-04 21:19:37,437 INFO mapreduce.Job:  map 0% reduce 0%
+2024-01-04 21:19:45,537 INFO mapreduce.Job:  map 100% reduce 0%
+2024-01-04 21:19:51,594 INFO mapreduce.Job:  map 100% reduce 100%
+2024-01-04 21:19:51,608 INFO mapreduce.Job: Job job_1704377793637_0002 completed successfully
+2024-01-04 21:19:51,664 INFO mapreduce.Job: Counters: 50
+        File System Counters
+                FILE: Number of bytes read=229
+                FILE: Number of bytes written=552877
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=204
+                HDFS: Number of bytes written=80
+                HDFS: Number of read operations=8
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=2
+                HDFS: Number of bytes read erasure-coded=0
+        Job Counters
+                Launched map tasks=1
+                Launched reduce tasks=1
+                Data-local map tasks=1
+                Total time spent by all maps in occupied slots (ms)=5371
+                Total time spent by all reduces in occupied slots (ms)=3556
+                Total time spent by all map tasks (ms)=5371
+                Total time spent by all reduce tasks (ms)=3556
+                Total vcore-milliseconds taken by all map tasks=5371
+                Total vcore-milliseconds taken by all reduce tasks=3556
+                Total megabyte-milliseconds taken by all map tasks=5499904
+                Total megabyte-milliseconds taken by all reduce tasks=3641344
+        Map-Reduce Framework
+                Map input records=5
+                Map output records=17
+                Map output bytes=189
+                Map output materialized bytes=229
+                Input split bytes=116
+                Combine input records=0
+                Combine output records=0
+                Reduce input groups=5
+                Reduce shuffle bytes=229
+                Reduce input records=17
+                Reduce output records=5
+                Spilled Records=34
+                Shuffled Maps =1
+                Failed Shuffles=0
+                Merged Map outputs=1
+                GC time elapsed (ms)=156
+                CPU time spent (ms)=0
+                Physical memory (bytes) snapshot=0
+                Virtual memory (bytes) snapshot=0
+                Total committed heap usage (bytes)=464519168
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters
+                Bytes Read=88
+        File Output Format Counters
+                Bytes Written=80
+
+***************** Ket thuc lan lap 2 *****************
+
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 1 1 0 2:1;3:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 2 1 1 1:1;4:1;5:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 3 1 1 1:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 4 2 2 2:1;5:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 5 2 2 2:1;4:1;
+****************************************
+* outputfile    : /output/dijkstra2/part-r-00000
+* smallest value: 1
+* fixed         : 1 - 1;
+****************************************
+============= BEFORE MAP ================== 2 {1=0, 2=1, 3=1, 4=2, 5=2}
+============= CURRENT MAP ================== 2 {1=0, 2=1, 3=1, 4=2, 5=2}
+2024-01-04 21:19:51,732 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at /127.0.0.1:8032
+2024-01-04 21:19:51,759 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/rickdal/.staging/job_1704377793637_0003
+2024-01-04 21:19:51,807 INFO input.FileInputFormat: Total input files to process : 1
+2024-01-04 21:19:51,863 INFO mapreduce.JobSubmitter: number of splits:1
+2024-01-04 21:19:51,949 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1704377793637_0003
+2024-01-04 21:19:51,949 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2024-01-04 21:19:52,001 INFO impl.YarnClientImpl: Submitted application application_1704377793637_0003
+2024-01-04 21:19:52,014 INFO mapreduce.Job: The url to track the job: http://air-cua-vo.lan:8088/proxy/application_1704377793637_0003/
+2024-01-04 21:19:52,014 INFO mapreduce.Job: Running job: job_1704377793637_0003
+2024-01-04 21:20:06,296 INFO mapreduce.Job: Job job_1704377793637_0003 running in uber mode : false
+2024-01-04 21:20:06,296 INFO mapreduce.Job:  map 0% reduce 0%
+2024-01-04 21:20:12,386 INFO mapreduce.Job:  map 100% reduce 0%
+2024-01-04 21:20:20,488 INFO mapreduce.Job:  map 100% reduce 100%
+2024-01-04 21:20:20,504 INFO mapreduce.Job: Job job_1704377793637_0003 completed successfully
+2024-01-04 21:20:20,557 INFO mapreduce.Job: Counters: 50
+        File System Counters
+                FILE: Number of bytes read=153
+                FILE: Number of bytes written=552725
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=196
+                HDFS: Number of bytes written=80
+                HDFS: Number of read operations=8
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=2
+                HDFS: Number of bytes read erasure-coded=0
+        Job Counters
+                Launched map tasks=1
+                Launched reduce tasks=1
+                Data-local map tasks=1
+                Total time spent by all maps in occupied slots (ms)=3613
+                Total time spent by all reduces in occupied slots (ms)=5338
+                Total time spent by all map tasks (ms)=3613
+                Total time spent by all reduce tasks (ms)=5338
+                Total vcore-milliseconds taken by all map tasks=3613
+                Total vcore-milliseconds taken by all reduce tasks=5338
+                Total megabyte-milliseconds taken by all map tasks=3699712
+                Total megabyte-milliseconds taken by all reduce tasks=5466112
+        Map-Reduce Framework
+                Map input records=5
+                Map output records=11
+                Map output bytes=125
+                Map output materialized bytes=153
+                Input split bytes=116
+                Combine input records=0
+                Combine output records=0
+                Reduce input groups=5
+                Reduce shuffle bytes=153
+                Reduce input records=11
+                Reduce output records=5
+                Spilled Records=22
+                Shuffled Maps =1
+                Failed Shuffles=0
+                Merged Map outputs=1
+                GC time elapsed (ms)=160
+                CPU time spent (ms)=0
+                Physical memory (bytes) snapshot=0
+                Virtual memory (bytes) snapshot=0
+                Total committed heap usage (bytes)=463470592
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters
+                Bytes Read=80
+        File Output Format Counters
+                Bytes Written=80
+
+***************** Ket thuc lan lap 3 *****************
+
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 1 1 0 2:1;3:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 2 1 1 1:1;4:1;5:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 3 1 1 1:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 4 2 2 2:1;5:1;
+*** RUN *** C?n ghi nh?n l?i c?p n D - ??nh n v? D: ?? d?i ???ng ?i t? ??nh xu?t ph?t ??n ??nh n === 5 2 2 2:1;4:1;
+****************************************
+* outputfile    : /output/dijkstra3/part-r-00000
+* smallest value: 2
+* fixed         : 3 - 1;2;3;
+****************************************
+============= BEFORE MAP ================== 3 {1=0, 2=1, 3=1, 4=2, 5=2}
+============= CURRENT MAP ================== 3 {1=0, 2=1, 3=1, 4=2, 5=2}
+****************************************
+* outputfile    : /output/dijkstra3/part-r-00000
+****************************************
+* 1 1 0 2:1;3:1;
+* 2 1 1 1:1;4:1;5:1;
+* 3 1 1 1:1;
+* 4 2 2 2:1;5:1;
+* 5 2 2 2:1;4:1;
+****************************************
+
+
+Summarize the log
+===========
+The provided log captures the execution of a Hadoop MapReduce job for the Dijkstra algorithm. Here is a summary of the log:
+
+Job Execution Summary:
+Input File: /user/chattod/data
+Output Directory: /output
+Run 1:
+Job runs in non-uber mode.
+Map progress: 100%, Reduce progress: 100%
+Map output records: 20, Reduce output records: 5
+The output is saved to /output/dijkstra1/part-r-00000
+Run 2:
+Job runs in non-uber mode.
+Map progress: 100%, Reduce progress: 100%
+Map output records: 17, Reduce output records: 5
+The output is saved to /output/dijkstra2/part-r-00000
+Run 3:
+Job runs in non-uber mode.
+Map progress: 100%, Reduce progress: 100%
+Map output records: 11, Reduce output records: 5
+The output is saved to /output/dijkstra3/part-r-00000
+Observations:
+Each run of the job processes the input file and produces output.
+The log shows the progress of each run and the counters indicating the number of bytes read/written, map and reduce tasks launched, and other job-related metrics.
+The output files contain information about the smallest value, fixed values, and mapping details (1 1 0 2:1;3:1;, 2 1 1 1:1;4:1;5:1;, etc.).
+These logs provide insight into the execution details of the Dijkstra algorithm using Hadoop MapReduce, displaying progress and metrics for each run of the job.
+
