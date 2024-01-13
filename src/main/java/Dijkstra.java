@@ -120,7 +120,6 @@ public class Dijkstra extends Configured implements Tool {
             fix_count = 0;
             fixed = "";
 
-//            System.out.println("***************** TEST *****************");
             System.out.println("\n***************** Ket thuc lan lap " + (++stt) + " *****************\n");
             while (line != null) {
                 //Cần ghi nhận lại cặp n D - đỉnh n và D: độ dài đường đi từ đỉnh xuất phát đến đỉnh n
@@ -130,26 +129,6 @@ public class Dijkstra extends Configured implements Tool {
                 D = Long.parseLong(sp[2]);
                 currentMap.put(n, D);
 
-//                if(beforeMap.isEmpty()){
-//                    if(D == 0){
-//                        originalNode = n;
-//                    }
-//                    LinkedList<String> ajdcientNodes = new LinkedList<>();
-//                    ajdcientNodes.add(originalNode);
-//                    result.putIfAbsent(n, ajdcientNodes);
-//                }
-//                else {
-//                    currentMap.put(n, D);
-//                }
-//                if (D != 0 && D < MAX) {
-//                    String dsk = sp[3];
-//                    List<String> ajdcientOfN = result.get(n);
-//                    ajdcientOfN.add(sp[1]);
-//                    if(ajdcientOfN.size() >1){
-//                        LinkedList<String> collect = ajdcientOfN.stream().filter(no -> !dsk.contains(no + ":")).collect(Collectors.toCollection(LinkedList::new));
-//                        result.put(n, collect);
-//                    }
-//                }
                 if (D <= smallest_value) {
                     fix_count++;
                     fixed += n + ";";

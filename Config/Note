@@ -1,0 +1,8 @@
+success = job.waitForCompletion(true); what it means in Hadoop
+The true argument enables progress reporting to the console. You'll see updates about the job's progress, including:
+Percentage completion
+Map and reduce task completion
+Counters (e.g., number of records processed)
+The method returns a boolean value (true or false) indicating whether the job completed successfully.
+True: Job completed successfully
+False: Job failed

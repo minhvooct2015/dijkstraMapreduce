@@ -1,0 +1,38 @@
+#!/bin/bash
+
+
+# Format HDFS namenode
+hdfs namenode -format
+
+
+# Start Hadoop services
+/usr/local/Cellar/hadoop/3.3.2/sbin/start-all.sh
+/usr/local/Cellar/hadoop/3.3.2/sbin/stop-all.sh
+
+# Create directories in HDFS
+hdfs dfs -mkdir /input
+hdfs dfs -mkdir /output
+
+
+# put data to HDFS
+hadoop fs -put data/input1.txt /input
+# run
+/usr/local/Cellar/hadoop/3.3.2/bin/hadoop jar target/DijkstraMapreduce-1.0-SNAPSHOT.jar Dijkstra /input output
+
+# Copy data to HDFS
+hdfs dfs -copyFromLocal /Users/rickdal/Documents/Hadoop-project/DijkstraMapreduce/data /input/data
+
+/usr/local/Cellar/hadoop/3.3.2/bin/hadoop jar target/DijkstraMapreduce-1.0-SNAPSHOT.jar Dijkstra /input/data output
+
+hadoop fs -cat  /output/dijkstra4/part-r-00000
+
+
+hadoop fs -rm -r /inputXYZ
+hadoop fs -mkdir /inputXYZ
+hadoop fs -put input1.txt /inputXYZ
+hadoop fs -ls /inputXYZ
+hadoop fs -rm –r /output*  : ▪ Xóa thư mục /outputXYZ nếu đã có
+hadoop fs -ls /
+
+ hadoop fs -ls /outputXYZ
+hadoop fs -cat /outputXYZ-6/part-00000

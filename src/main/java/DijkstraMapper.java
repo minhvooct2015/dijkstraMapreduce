@@ -20,6 +20,7 @@ public class DijkstraMapper extends Mapper<LongWritable, Text, Text, Text> {
         //Mỗi dòng input được lưu vào value
         //có dạng: <n p D m1:d1;m2:d2;...;>
         //Ví dụ:   1 1 0 2:1;3:1;
+//        A A 0 B:3;E:5;
         String line = value.toString();
         System.out.println("Mapper - input:========================");
         System.out.println(line);
@@ -56,6 +57,7 @@ public class DijkstraMapper extends Mapper<LongWritable, Text, Text, Text> {
             output_value.clear();
         } else if (D > smallest) {
             //Nếu D > smallest => đây là đỉnh có thể cập nhật cho đường đi ngắn hơn nữa
+//            A A 0 B:3;E:5;
             if (!sp[3].equalsIgnoreCase("null;"))
                 for (String md : pointsTo) {
                     String[] data = md.split(":");

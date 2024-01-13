@@ -1,3 +1,4 @@
+import com.google.common.collect.Iterables;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
@@ -44,7 +45,10 @@ public class DijkstraReducer extends Reducer<Text, Text, Text, Text> {
             } else if (sp[0].equalsIgnoreCase("N")) {
                 //N m1;m2;...;   - m1:d1;m2:d2;...; dùng để khôi phục lại trạng thái của đỉnh n
                 pointsTo = sp[1];
-            } else {
+            }
+
+            //move nay len tren cho chay nhanh
+            else {
                 //F p D m1:d1;m2:d2;...; DDDD tu dinh xuat phat den đỉnh n da ngan nhat => khong the cap nhat nua
                 p = sp[1];
                 shortest = Long.parseLong(sp[2]);
