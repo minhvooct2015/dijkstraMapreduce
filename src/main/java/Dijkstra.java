@@ -45,6 +45,7 @@ public class Dijkstra extends Configured implements Tool {
     public int run(String[] args) throws Exception {
         //Cấu hình giá trị key - value ngăn cách bởi khoảng trắng
         System.out.println("================RUN===================================");
+        long startTime = System.currentTimeMillis();
         getConf().set("mapreduce.output.textoutputformat.separator", " ");
         //Lấy giá trị của file input và output
         IN = args[0];
@@ -185,7 +186,9 @@ public class Dijkstra extends Configured implements Tool {
         }
 
         System.out.println("****************************************");
-
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+        System.out.println("Note: Execution time: " + executionTime + " milliseconds");
         return success ? 0 : 1;
     }
 
